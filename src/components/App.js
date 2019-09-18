@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Context from '../context';
+
+import List from './List';
 
 export function App({ initialData }) {
-  const [count, setCount] = useState(0);
+  const [activeDealId, setActiveDealId] = React.useState(
+    initialData.activeDealId
+  );
+
+  const handleActiveDealChange = dealId => {
+    history.pushState({}, null, '/' + dealId);
+    setActiveDealId(dealId);
+  };
+
   return (
-    <div>
-      <h1>{initialData.appName}</h1>
-      This is a sample stateful and server-side rendered React application.
-      <br />
-      <br />
-      Here is a button that will track how many times you click it:
-      <br />
-      <br />
-      <button onClick={() => setCount(count + 1)}>{count}</button>
-    </div>
+    <Context.Provider value={{ activeDealId, handleActiveDealChange }}>
+      <List deals={initialData.deals} />
+    </Context.Provider>
   );
 }

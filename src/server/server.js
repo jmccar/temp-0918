@@ -26,9 +26,9 @@ try {
   app.locals.gVars = {};
 }
 
-app.get('/', async (req, res) => {
+app.get('/:dealId?', async (req, res) => {
   try {
-    const vars = await serverRenderer();
+    const vars = await serverRenderer({ activeDealId: req.params.dealId });
     res.render('index', vars);
   } catch (err) {
     console.error(err);
